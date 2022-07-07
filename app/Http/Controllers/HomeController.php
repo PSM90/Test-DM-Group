@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Http;
 
 class HomeController extends Controller
@@ -45,21 +43,33 @@ class HomeController extends Controller
 
         // Avrei potuto fare un Helper ma ho incluso la funzione in questa classe per far prima dato il tempo scarso a disposizione
         $travels = $this->format_travels($total_travels, 16);
-        $trendings = $this->format_travels($trendings, 8);
+        $travels = $this->format_travels($trendings, 8, $travels, 'trendings');
 
-        return view('home', [ 'travels' => $travels, 'trendings' => $trendings ]);
+        return view('home', [ 'travels' => $travels ]);
     }
 
-    function format_travels($travels, $limit_per_continent){
-        $return_array = [];
+    /**
+     * Riformatta i dati in base al JSON delle API pronti per la vista
+     *
+     * @param $travels - Viaggi
+     * @param $limit_per_continent - Quanti viaggi al massimo
+     * @param $total_array - Array su cui operare - default: []
+     * @param string $type - Tipo - viene utilizzato come chiave per l'array di ritorno - detault: 'travels'
+     * @return mixed
+     * @throws \Exception
+     */
+    function format_travels($travels, $limit_per_continent, $total_array = [], $type = 'travels'){
         foreach($travels as $travel) {
-            $continent = trim($travel[ 'primaryDestination' ][ 'primaryContinent' ][ 'name' ]);
+            $continent_code = $travel[ 'primaryDestination' ][ 'primaryContinent' ][ 'code' ];
 
             if(
-                ( isset($return_array[$continent]) && count($return_array[ $continent ] ) >= $limit_per_continent ) ||
+                ( isset($total_array[$continent_code][$type]) && count($total_array[ $continent_code ][$type] ) >= $limit_per_continent ) ||
                 is_null($travel['bestTour'])
             )
                 continue;
+
+            if(!isset($total_array[$continent_code]['label']))
+                $total_array[$continent_code]['label'] = trim($travel[ 'primaryDestination' ][ 'primaryContinent' ][ 'name' ]);
 
             $id = $travel[ 'id' ];
             $title = trim($travel[ 'title' ]);
@@ -86,7 +96,7 @@ class HomeController extends Controller
                 ];
             }
 
-            $return_array[$continent][$id] = [
+            $total_array[$continent_code][$type][$id] = [
                 'title' => $title,
                 'thumbnails' => $thumbnails,
                 'days' => $days,
@@ -95,6 +105,6 @@ class HomeController extends Controller
             ];
         }
 
-        return $return_array;
+        return $total_array;
     }
 }
