@@ -1,0 +1,206 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+@mixin mobile {
+  @media (max-width: 599px) { @content; }
+}
+@mixin tablet_vert {
+  @media (min-width: 600px) { @content; }
+}
+@mixin tablet_or {
+  @media (min-width: 900px) { @content; }
+}
+@mixin desktop {
+  @media (min-width: 1200px) { @content; }
+}
+@mixin big_screen {
+  @media (min-width: 1800px) { @content; }
+}
+
+html,body{
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    padding:0;
+    margin:0;
+}
+
+h1{
+    font-size: 45px;
+    font-weight: 700;
+    color: #fff;
+    margin:0;
+}
+
+h2{
+    font-weight: 400;
+    color: #fff;
+    margin:0;
+}
+
+header{
+    position: fixed;
+    top: 0;
+    right:0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding-top:40px;
+
+    .header-container{
+        width: 100%;
+        padding: 0 200px;
+    }
+
+    .left-menu{
+        float:left;
+    }
+    .right-menu{
+        float:right;
+    }
+
+    .logo-url{
+        display: inline-block;
+        position: relative;
+        width: 104px;
+        height: 21px;
+        margin-right: 10px;
+
+        img{
+            position: absolute;
+            left:0;
+            width: 104px;
+            height: 21px;
+            transition: opacity .3s ease-in-out;
+        }
+    }
+    .logo{
+        opacity: 0;
+    }
+    &.sticky{
+        .logo{
+            opacity: 1;
+        }
+        .logo-white{
+            opacity: 0;
+        }
+    }
+
+    .search-container{
+        display: inline-block;
+        padding: 0 10px;
+        border-left: 1px solid #fff;
+
+        .search-icon{
+            width: 22px;
+        }
+        input[type=text]{
+            border:0;
+            color:#fff;
+            padding-left:10px;
+            background-color: transparent;
+            height: 15px;
+            position: relative;
+            top: -4px;
+            &::placeholder{
+                color:#fff;
+                opacity:1;
+            }
+        }
+    }
+
+    .menu{
+        list-style: none;
+        display: flex;
+        position: relative;
+        margin: 0;
+
+        li{
+            margin:0 20px;
+            a{
+                text-decoration: none;
+                color: #fff;
+                font-weight: 700;
+                position: relative;
+
+                .arrow{
+                    position: absolute;
+                    bottom:0;
+                }
+            }
+
+            &.has-child{
+                &:hover .submenu{
+                    display: block;
+                }
+            }
+        }
+
+        .submenu{
+            display:none;
+            position: absolute;
+            top:30px;
+            background-color: #fff;
+            list-style: none;
+            margin:0;
+            padding:15px;
+
+            li{
+                margin:0;
+                padding-bottom: 10px;
+
+                &:last-child{
+                    padding-bottom:0;
+                }
+                a{
+                    color: #000;
+                    font-weight: 400;
+                }
+            }
+        }
+    }
+
+    .user-menu{
+        border: 1px solid #fff;
+        border-radius: 20px;
+        padding: 4px;
+        height: 24px;
+        position: relative;
+        top: -6px;
+        background-color: #0f47ac;
+        transition: background-color .3s ease-in-out;
+        cursor: pointer;
+
+        .user-icon{
+            background-color: #e0e0e0;
+            border-radius: 50%;
+            margin-left:1px;
+            transition: background-color .3s ease-in-out;
+        }
+
+        &:hover{
+            background-color: #155ee0;
+            .user-icon{
+                background-color: #fff;
+            }
+        }
+    }
+}
+
+.cover{
+    background: url("/../images/cover-desktop.svg") top center no-repeat;
+    background-size: cover;
+    color: #fff;
+    text-align: center;
+    height: 900px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .cover-container{
+        padding-top: 100px;
+    }
+
+    h1,h2,h3{
+        padding: 5px 10px;
+    }
+}
