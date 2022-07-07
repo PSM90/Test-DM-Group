@@ -5,7 +5,7 @@
         <div class="continents-tabs-container">
             <ul>
                 @foreach($travels as $code => $continents)
-                    <li>{{ $continents }}</li>
+                    <li>{{ $continents['label'] }}</li>
                 @endforeach
             </ul>
         </div>
