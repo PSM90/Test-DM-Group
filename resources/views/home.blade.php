@@ -4,13 +4,9 @@
     <section class="travels">
         <div class="continents-tabs-container">
             <ul>
-                @foreach($travels as $travel)
-                    <li class="active">{{ $travel }}</li>
+                @foreach($travels as $code => $continents)
+                    <li>{{ $continents }}</li>
                 @endforeach
-                <li>Asia</li>
-                <li>Africa</li>
-                <li>America</li>
-                <li>Oceania</li>
             </ul>
         </div>
     </section>
